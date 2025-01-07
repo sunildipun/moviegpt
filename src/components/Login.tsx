@@ -1,14 +1,18 @@
 import Button from "./Button";
 import NetflixBackgroundImage from "../assets/NetflixBackground.jpg";
-import { Link } from "react-router-dom";
-import { useRef } from "react";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { LoginValidation } from "../utils/LoginValidation";
 
 const Login = () => {
+    const [loginErrorMessage, setLoginErrorMessage] = useState(null)
     const email = useRef(null);
     const password = useRef(null);
+    const navigate = useNavigate();
     const handleSignButton = () => {
-        console.log('Handle Sign in Button and navigate', email.current?.value, password.current?.value);
+        const errorMessage = LoginValidation(email.current?.value, password.current?.value);
+        setLoginErrorMessage(errorMessage);
+        navigate("/home");
     }
 
     return (
@@ -25,7 +29,7 @@ const Login = () => {
             <div className="w-full mt-4">
                 <label className="block text-sm/6 font-medium">Email</label>
                 <div className="mt-2">
-                    <input ref={email} type="email" name="email" id="email" className="block w-full py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6 rounded-sm bg-slate-300" placeholder="Email" />
+                    <input ref={email} name="email" id="email" className="block w-full py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6 rounded-sm bg-slate-300" placeholder="Email" />
                 </div>
             </div>
             <div className="w-full mt-4">
@@ -34,6 +38,9 @@ const Login = () => {
                     <input ref={password} type="password" name="password" id="password" className="block w-full py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6 rounded-sm bg-slate-300" placeholder="Password" />
                 </div>
             </div>
+            {
+                loginErrorMessage && <p className="text-red-700 mt-2">{loginErrorMessage}</p>
+            }
             <div className="w-full mt-4 text-center">
                 <Button text="Sign In" onClick={handleSignButton}/>
                 <h2 className="my-4">Forgot Password?</h2>
