@@ -12,7 +12,9 @@ const Login = () => {
     const handleSignButton = () => {
         const errorMessage = LoginValidation(email.current?.value, password.current?.value);
         setLoginErrorMessage(errorMessage);
-        navigate("/home");
+        if (!errorMessage) {
+            navigate("/home");
+        }
     }
 
     return (

@@ -63,3 +63,8 @@ export default tseslint.config({
     -Header
       -Logo
       -User Profile(Only when logged in)
+
+  Form 
+  react-router-dom (createBrowserRouter, RouterProvider, Link, useNavigate)
+  Formik
+  Tailwind
